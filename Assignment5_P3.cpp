@@ -35,29 +35,27 @@ number =nullptr;
 
 //Mode Function definition
 
-int getMode(int *arr, int SIZE)
+int getMode(int* arr, int SIZE) 
 {
-    // Create an array to store the frequency of each number
-    int freq[100] = {0};
-    // Initialize the max frequency and mode to -1
-    int maxFreq = -1, mode = -1;
-    
-    // Loop through the array of integers
-    for (int i = 0; i < SIZE; i++)
-    {
-        // Increment the frequency of the current integer
-        freq[arr[i]]++;
-        // Update the mode and max frequency if a new maximum frequency is found
-        if (freq[arr[i]] > maxFreq)
-        {
-            maxFreq = freq[arr[i]];
-            mode = arr[i];
+    int mode = -1; // initialize the mode to -1
+    int maxFreq = 0; // initialize the maximum frequency to 0
+
+    for (int i = 0; i < SIZE; i++) {
+        int freq = 0; // initialize the frequency of the current element to 0
+        for (int j = 0; j < SIZE; j++) {
+            if (*(arr + j) == *(arr + i)) {
+                freq++; // increment the frequency if the current element matches
+            }
+        }
+        if (freq > maxFreq) { // if the current element has a higher frequency than the current mode
+            mode = *(arr + i); // set the current element as the new mode
+            maxFreq = freq; // update the maximum frequency
         }
     }
-    
-    // Check if there is no mode
-    if (maxFreq == 1)
-        return -1;
-    else
-        return mode;
+
+    if (maxFreq == 1) { // if there is no mode
+        mode = -1;
+    }
+
+    return mode;
 }
