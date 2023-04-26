@@ -26,7 +26,7 @@ int main()
 int mode = getMode(number,SIZE); //function call 
 
 if(mode == -1)
-    cout<<"\nThere is no mode of these numbers."<<endl;
+   cout<<"\nThere is no mode of these numbers."<<endl;
 else
     cout<<"Mode = "<<mode<<endl;
 delete [] number;
@@ -35,24 +35,29 @@ number =nullptr;
 
 //Mode Function definition
 
-int getMode(int* arr, int size)
+int getMode(int *arr, int SIZE)
 {
-    int mode = -1, maxCount = 0;
-    for(int i = 0; i < size; i++)
+    // Create an array to store the frequency of each number
+    int freq[100] = {0};
+    // Initialize the max frequency and mode to -1
+    int maxFreq = -1, mode = -1;
+    
+    // Loop through the array of integers
+    for (int i = 0; i < SIZE; i++)
     {
-        int count = 0;
-        for(int j = 0; j < size; j++)
+        // Increment the frequency of the current integer
+        freq[arr[i]]++;
+        // Update the mode and max frequency if a new maximum frequency is found
+        if (freq[arr[i]] > maxFreq)
         {
-            if(*(arr + j) == *(arr + i)) // Compare values using pointer notation
-                count++;
-        }
-        if(count > maxCount) // Check if the current count is greater than the previous maximum count
-        {
-            maxCount = count;
-            mode = *(arr + i); // Update mode with the current value
+            maxFreq = freq[arr[i]];
+            mode = arr[i];
         }
     }
-    if(maxCount < 2) // If no value occurs more than once, return -1
-        mode = -1;
-    return mode;
+    
+    // Check if there is no mode
+    if (maxFreq == 1)
+        return -1;
+    else
+        return mode;
 }
